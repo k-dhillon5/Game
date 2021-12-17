@@ -51,7 +51,7 @@ class Ball(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.Surface([self.width, self.height])
         self.image.fill(LIGHTBLUE)
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect()  # hi
 
         self.screenheight = pygame.display.get_surface().get_height()
         self.screenwidth = pygame.display.get_surface().get_width()
