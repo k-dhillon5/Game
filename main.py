@@ -2,7 +2,7 @@ import pygame
 import random
 import math
 
-from pygame.display import init, update
+#from pygame.display import init, update
 
 # Define some colors
 BLACK = (0, 0, 0)
@@ -39,7 +39,7 @@ radius = 10
 
 
 class Ball(pygame.sprite.Sprite):
-    speed = 10
+    speed = 3
     x = 0
     y = 180
 
@@ -51,7 +51,7 @@ class Ball(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.Surface([self.width, self.height])
         self.image.fill(LIGHTBLUE)
-        self.rect = self.image.get_rect()  # hi
+        self.rect = self.image.get_rect()  
 
         self.screenheight = pygame.display.get_surface().get_height()
         self.screenwidth = pygame.display.get_surface().get_width()
@@ -83,13 +83,13 @@ class Ball(pygame.sprite.Sprite):
 
         if self.x > self.screenwidth - self.width:
             self.direction = (360 - self.direction) % 360
-            self.x = self.screenwidth = self.width - 1
+            self.x = self.screenwidth - self.width - 1
 
     # ball missed  the platform
         if self.y > 500:
-            return True
+            return "game over"
         else:
-            return False
+            return "game"
 
 
 class Platform(pygame.sprite.Sprite):
@@ -108,6 +108,8 @@ class Platform(pygame.sprite.Sprite):
 
         self.rect.x = 0
         self.rect.y = self.screenheight-self.y
+
+    def update(self):
 
         pos = pygame.mouse.get_pos()
         # Set the left side of the player bar to the mouse position
@@ -227,6 +229,7 @@ for row in range(5):
 def run_game():
     print("game")
     global done
+    global game_state
 
     # --- Main event loop
 
@@ -237,12 +240,9 @@ def run_game():
     if not done:
         # Update the player and ball positions
         platform1.update()
-        done = ball.update()
+        game_state = ball.update()
 
-    if done:
-        text = font.render("GAME OVER", True, RED)
-        screen.blit(text, [400, 600])
-
+    
     if pygame.sprite.spritecollide(platform1, balls, False):
         diff = (platform1.rect.x + platform1.x/2) - \
             (ball.rect.x + ball.width/2)
@@ -258,16 +258,44 @@ def run_game():
     if len(blocks) == 0:
         done = True
 
+    screen.fill(BLACK)
     allsprites.draw(screen)
 
+def game_over():
+    print("Game Over")
+    global done
+    global game_state
 
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True
+        
+
+    # set the screen background
+    screen.fill(BLACK)
+        # draw instructions, page 1
+    text = font.render("Game Over", True, RED)
+    screen.blit(text, [300, 200])
+
+    text = font.render("Click to play again", True, WHITE)
+    screen.blit(text, [260, 400])
+
+  # for event in pygame.event.get():
+  #       if event.type == pygame.QUIT:
+  #           done = True
+  #       if event.type == pygame.MOUSEBUTTONDOWN:
+  #          
+  #           if game_over = True:
+  #               game_state = "game"
+    
 # -------- Main Program Loop -----------
 while not done:
     if game_state == "instructions":
         run_instructions()
     elif game_state == "game":
         run_game()
-
+    elif game_state == "game over":
+        game_over()
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
 
