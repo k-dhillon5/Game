@@ -39,7 +39,7 @@ radius = 10
 
 
 class Ball(pygame.sprite.Sprite):
-    speed = 3
+    speed = 5
     x = 0
     y = 180
 
@@ -51,7 +51,7 @@ class Ball(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.Surface([self.width, self.height])
         self.image.fill(LIGHTBLUE)
-        self.rect = self.image.get_rect()  
+        self.rect = self.image.get_rect()
 
         self.screenheight = pygame.display.get_surface().get_height()
         self.screenwidth = pygame.display.get_surface().get_width()
@@ -187,7 +187,7 @@ def run_instructions():
     if instruction_page == 2:
         # draw instructions, page 2
         text = font.render(
-            "Use the left and right arrow keys to control the platfrom. ", True, BLUE)
+            "Use the your mouse to control the platform. ", True, BLUE)
         screen.blit(text, [10, 230])
         text = font.render(
             "Use this platfrom to bounce the ball and hit the floating objects", True, BLUE)
@@ -242,7 +242,6 @@ def run_game():
         platform1.update()
         game_state = ball.update()
 
-    
     if pygame.sprite.spritecollide(platform1, balls, False):
         diff = (platform1.rect.x + platform1.x/2) - \
             (ball.rect.x + ball.width/2)
@@ -261,6 +260,7 @@ def run_game():
     screen.fill(BLACK)
     allsprites.draw(screen)
 
+
 def game_over():
     print("Game Over")
     global done
@@ -269,25 +269,18 @@ def game_over():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
-        
-
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            game_state = "game"
     # set the screen background
     screen.fill(BLACK)
-        # draw instructions, page 1
+    # draw instructions, page 1
     text = font.render("Game Over", True, RED)
     screen.blit(text, [300, 200])
 
     text = font.render("Click to play again", True, WHITE)
     screen.blit(text, [260, 400])
 
-  # for event in pygame.event.get():
-  #       if event.type == pygame.QUIT:
-  #           done = True
-  #       if event.type == pygame.MOUSEBUTTONDOWN:
-  #          
-  #           if game_over = True:
-  #               game_state = "game"
-    
+
 # -------- Main Program Loop -----------
 while not done:
     if game_state == "instructions":
@@ -304,3 +297,4 @@ while not done:
 
 # Close the window and quit.
 pygame.quit()
+
