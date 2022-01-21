@@ -190,7 +190,7 @@ def run_instructions():
             "Use the your mouse to control the platform. ", True, BLUE)
         screen.blit(text, [10, 230])
         text = font.render(
-            "Use this platfrom to bounce the ball and hit the floating objects", True, BLUE)
+            "Use this platform to bounce the ball and hit the floating objects", True, BLUE)
         screen.blit(text, [10, 255])
 
         text = font.render("to make them all disapear!", True, BLUE)
@@ -279,7 +279,7 @@ def game_over():
     text = font.render("Game Over", True, RED)
     screen.blit(text, [300, 200])
 
-    text = font.render("Click to play again", True, WHITE)
+    text = font.render("Click to end game", True, WHITE)
     screen.blit(text, [260, 400])
 
 
