@@ -39,7 +39,7 @@ radius = 10
 
 
 class Ball(pygame.sprite.Sprite):
-    speed = 5
+    speed = 6
     x = 0
     y = 180
 
@@ -270,7 +270,9 @@ def game_over():
         if event.type == pygame.QUIT:
             done = True
         if event.type == pygame.MOUSEBUTTONDOWN:
-            game_state = "game"
+            ball.y = 200
+            done = True
+
     # set the screen background
     screen.fill(BLACK)
     # draw instructions, page 1
@@ -289,6 +291,7 @@ while not done:
         run_game()
     elif game_state == "game over":
         game_over()
+
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
 
@@ -297,4 +300,3 @@ while not done:
 
 # Close the window and quit.
 pygame.quit()
-
